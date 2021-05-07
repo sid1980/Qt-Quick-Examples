@@ -13,11 +13,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *///-----------------------------------------------------------------------
 import QtQuick 2.15
-import ClockComponent 1.0
+import plugins.analog_clock 1.0
 
 Rectangle{
 	id: root
-	anchors.fill: parent
+    x: parent.x
+    y: parent.y
+    z: parent.z
+    width: parent.width
+    height: parent.height
 	color: "transparent"
 	property int hours
     property int minutes
@@ -40,26 +44,26 @@ Rectangle{
 	Image{
 		x: parent.x
 		y: parent.y
-		z: 0
+        z: parent.z + 0
 		width: parent.width
 		height: parent.height
-		fillMode: Image.PreserveAspectFit
-		source: "qrc:/clock_img/base.svg"
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/img/base.svg"
 	}
 
 	Image{
 		id: hour_nidle
 		x: parent.x
 		y: parent.y
-		z: 1
+        z: parent.z + 1
 		width: parent.width
 		height: parent.height
-		fillMode: Image.PreserveAspectFit
-		source: "qrc:/clock_img/hour.svg"
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/img/hour.svg"
 
 		transform: Rotation{
-			origin.x: parent.x + parent.width / 2
-			origin.y: parent.y + parent.height / 2
+            origin.x: root.x + root.width / 2
+            origin.y: root.y + root.height / 2
 			angle: (root.hours * 30) + (root.minutes * 0.5)
 			
 			Behavior on angle{
@@ -71,15 +75,15 @@ Rectangle{
 	Image{
 		x: parent.x
 		y: parent.y
-		z: 2
+        z: parent.z + 2
 		width: parent.width
 		height: parent.height
-		fillMode: Image.PreserveAspectFit
-		source: "qrc:/clock_img/minute.svg"
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/img/minute.svg"
 
 		transform: Rotation{
-			origin.x: parent.x + parent.width / 2
-			origin.y: parent.y + parent.height / 2
+            origin.x: root.x + root.width / 2
+            origin.y: root.y + root.height / 2
 			angle: root.minutes * 6
 
             Behavior on angle{
@@ -91,15 +95,15 @@ Rectangle{
 	Image{
 		x: parent.x
 		y: parent.y
-		z: 3
+        z: parent.z + 3
 		width: parent.width
 		height: parent.height
-		fillMode: Image.PreserveAspectFit
-		source: "qrc:/clock_img/second.svg"
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/img/second.svg"
 
 		transform: Rotation{
-			origin.x: parent.x + parent.width / 2
-			origin.y: parent.y + parent.height / 2
+            origin.x: root.x + root.width / 2
+            origin.y: root.y + root.height / 2
             angle: root.seconds * 6
 
             Behavior on angle{
@@ -111,10 +115,10 @@ Rectangle{
 	Image{
 		x: parent.x
 		y: parent.y
-		z: 4
+        z: parent.z + 4
 		width: parent.width
 		height: parent.height
-		fillMode: Image.PreserveAspectFit
-		source: "qrc:/clock_img/centor.svg"
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/img/centor.svg"
 	}
 }

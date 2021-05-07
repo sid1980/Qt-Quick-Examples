@@ -1,9 +1,0 @@
-<RCC>
-	<qresource prefix="/">
-		<file>clock_img/base.svg</file>
-		<file>clock_img/hour.svg</file>
-		<file>clock_img/minute.svg</file>
-		<file>clock_img/second.svg</file>
-		<file>clock_img/centor.svg</file>
-	</qresource>
-</RCC>

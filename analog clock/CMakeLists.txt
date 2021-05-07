@@ -1,47 +1,41 @@
-cmake_minimum_required(VERSION 3.14)
-project(analog_clock LANGUAGES CXX)
+cmake_minimum_required(VERSION 2.8.12)
+project(a.out LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Qml Gui REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Qml Gui REQUIRED)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Qml Gui Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Qml Gui Core REQUIRED)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/plugins)
 
 set(PROJECT_SOURCES
-	./src/main.cpp
-	./include/clock_backend.hpp
-	./src/clock_backend.cpp
-	./qml/qml.qrc
-	./img/img.qrc
+	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/qml/qml.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-	qt_add_executable(analog_clock ${PROJECT_SOURCES})
+	qt_add_executable(a.out ${PROJECT_SOURCES})
 else()
 	if(ANDROID)
-		add_library(analog_clock SHARED ${PROJECT_SOURCES})
+		add_library(a.out SHARED ${PROJECT_SOURCES})
 	else()
-		add_executable(analog_clock ${PROJECT_SOURCES})
+		add_executable(a.out ${PROJECT_SOURCES})
 	endif()
 endif()
 
 add_custom_target(run
-	COMMAND analog_clock
+	COMMAND a.out
 	WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
-target_compile_definitions(analog_clock PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_include_directories(analog_clock PRIVATE ./include)
-target_link_libraries(analog_clock PRIVATE 
+target_link_libraries(a.out PRIVATE 
 	Qt${QT_VERSION_MAJOR}::Qml
 	Qt${QT_VERSION_MAJOR}::Gui
-	Qt${QT_VERSION_MAJOR}::Core
+	analog_clock
 )
 
-set_property(TARGET analog_clock PROPERTY CXX_STANDARD 20)
+set_property(TARGET a.out PROPERTY AUTOMOC ON)
+set_property(TARGET a.out PROPERTY AUTORCC ON)
+set_property(TARGET a.out PROPERTY CXX_STANDARD 20)
 
 if(WIN32)
-	set_property(TARGET analog_clock PROPERTY WIN32_EXECUTABLE true)
+	set_property(TARGET a.out PROPERTY WIN32_EXECUTABLE true)
 endif()
