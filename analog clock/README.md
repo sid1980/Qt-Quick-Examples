@@ -35,15 +35,15 @@ analog clock
     │      │      second.svg
     │      │
     │      ├─include
-    │      │      clock_backend.hpp #Clock.qml用のバックエンドのヘッダ
+    │      │      clock_backend.hpp #アナログ時計バックエンドのヘッダ
     │      │      plugin.hpp #QQmlExtensionPluginのサブクラスのヘッダ
     │      │
     │      ├─qml
-    │      │      Clock.qml #アナログ時計本体
+    │      │      Clock.qml #アナログ時計フロントエンド
     │      │      qml.qrc
     │      │
     │      └─src
-    │              clock_backend.cpp #Clock.qml用のバックエンドの実装
+    │              clock_backend.cpp #アナログ時計バックエンドの実装
     │              plugin.cpp #QQmlExtensionPluginのサブクラスの実装
     │
     ├─qml
