@@ -16,30 +16,42 @@
 
 ```cmd
 analog clock
-│  CMakeLists.txt #cmakeスクリプト
-│  README.md #readme
-│
-├─img
-│  │  img.qrc #画像用のリソースファイル
-│  │
-│  └─clock_img
-│          base.svg #文字盤の画像
-│          centor.svg #針の軸の画像
-│          hour.svg #時針の画像
-│          minute.svg #分針の画像 
-│          second.svg #秒針の画像
-│
-├─include
-│      clock_backend.hpp #時計エレメントのバックエンド処理(C++)用のヘッダファイル
-│
-├─qml
-│      Clock.qml #アナログ時計エレメントの記されたqmlファイル
-│      main.qml #基底ウィンドウの記されたqmlファイル
-│      qml.qrc #qmlファイル用のリソースファイル
-│
-└─src
-        clock_backend.cpp #時計エレメントのバックエンド処理(C++)用の実装ファイル
-        main.cpp #エントリーポイントファイル
+    │  CMakeLists.txt
+    │  README.md
+    │
+    ├─plugins
+    │  │  CMakeLists.txt
+    │  │
+    │  └─analog_clock #ここからアナログ時計プラグイン
+    │      │  CMakeLists.txt
+    │      │  qmldir
+    │      │
+    │      ├─img #画像データ用フォルダ
+    │      │      base.svg
+    │      │      centor.svg
+    │      │      hour.svg
+    │      │      img.qrc
+    │      │      minute.svg
+    │      │      second.svg
+    │      │
+    │      ├─include
+    │      │      clock_backend.hpp #Clock.qml用のバックエンドのヘッダ
+    │      │      plugin.hpp #QQmlExtensionPluginのサブクラスのヘッダ
+    │      │
+    │      ├─qml
+    │      │      Clock.qml #アナログ時計本体
+    │      │      qml.qrc
+    │      │
+    │      └─src
+    │              clock_backend.cpp #Clock.qml用のバックエンドの実装
+    │              plugin.cpp #QQmlExtensionPluginのサブクラスの実装
+    │
+    ├─qml
+    │      main.qml #基底ウィンドウ
+    │      qml.qrc 
+    │
+    └─src
+            main.cpp #エントリーポイント
 ```
 
 # ビルドと実行
