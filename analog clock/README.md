@@ -39,7 +39,7 @@ analog clock
     │      │      plugin.hpp #QQmlExtensionPluginのサブクラスのヘッダ
     │      │
     │      ├─qml
-    │      │      Clock.qml #アナログ時計フロントエンド
+    │      │      AnalogClock.qml #アナログ時計フロントエンド
     │      │      qml.qrc
     │      │
     │      └─src
