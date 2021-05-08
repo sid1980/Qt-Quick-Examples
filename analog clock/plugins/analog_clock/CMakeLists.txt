@@ -13,6 +13,7 @@ add_library(analog_clock SHARED
 	${CMAKE_CURRENT_SOURCE_DIR}/include/plugin.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/img/img.qrc
 	${CMAKE_CURRENT_SOURCE_DIR}/qml/qml.qrc
+	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
 )
 
 target_link_libraries(analog_clock PRIVATE 
