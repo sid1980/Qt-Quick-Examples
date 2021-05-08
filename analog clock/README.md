@@ -77,5 +77,5 @@ make run
   - int get_second() const メソッド
     - 秒を整数で出力
 
-- Clockエレメント(Clock.qml)
+- AnalogClockエレメント(AnalogClock.qml)
   - アナログ時計を表示するエレメントであり、内部にTimerエレメントを保持し、100msに一回上記バックエンドc++クラスより現在時刻を取得し、画面に反映する。
