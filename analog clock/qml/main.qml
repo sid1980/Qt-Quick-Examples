@@ -15,6 +15,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.15
+
 import plugins.analog_clock 1.0
 
 Window{
@@ -28,5 +29,5 @@ Window{
 	minimumWidth: width * (1/3)
 	minimumHeight: height * (1/3)
 
-	AnalogClock{}
+    AnalogClock{}
 }
