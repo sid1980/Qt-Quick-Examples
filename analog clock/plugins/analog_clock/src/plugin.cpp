@@ -16,8 +16,11 @@
 #include <clock_backend.hpp>
 #include <qqml.h>
 #include <QUrl>
+#include <QString>
 
-void Plugin::registerTypes(const char *uri)
+void Plugin::registerTypes(const char* uri)
 {
-    qmlRegisterType<clock_component::ClockBackend>(uri, 1, 0, "ClockBackend");
+    auto internal_uri = (QString(uri) + ".internal_").toLocal8Bit();
+    qmlRegisterType<clock_component::ClockBackend>(internal_uri.data(), 1, 0, "ClockBackend_");
+    qmlRegisterType(QUrl("qrc:/qml/AnalogClock.qml"), uri, 1, 0, "AnalogClock");
 }

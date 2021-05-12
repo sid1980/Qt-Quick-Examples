@@ -1,5 +1,5 @@
 <RCC>
-	<qresource prefix="/img">
+	<qresource prefix="analog_clock/internal_/img">
 		<file>base.svg</file>
 		<file>hour.svg</file>
 		<file>minute.svg</file>

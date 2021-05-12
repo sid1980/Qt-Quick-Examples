@@ -13,7 +13,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *///-----------------------------------------------------------------------
 import QtQuick 2.15
-import plugins.analog_clock 1.0
+import plugins.analog_clock.internal_ 1.0
 
 Rectangle{
 	id: root
@@ -27,7 +27,7 @@ Rectangle{
     property int minutes
     property int seconds
 
-    ClockBackend{
+    ClockBackend_{
         id: clock_backend
 	}
 
@@ -40,7 +40,8 @@ Rectangle{
             root.minutes = clock_backend.get_minute();
             root.seconds = clock_backend.get_second();
 		}
-    }
+	}
+
 	Image{
 		x: parent.x
 		y: parent.y
@@ -48,7 +49,7 @@ Rectangle{
 		width: parent.width
 		height: parent.height
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/img/base.svg"
+        source: "qrc:/analog_clock/internal_/img/base.svg"
 	}
 
 	Image{
@@ -59,7 +60,7 @@ Rectangle{
 		width: parent.width
 		height: parent.height
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/img/hour.svg"
+        source: "qrc:/analog_clock/internal_/img/hour.svg"
 
 		transform: Rotation{
             origin.x: root.x + root.width / 2
@@ -79,7 +80,7 @@ Rectangle{
 		width: parent.width
 		height: parent.height
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/img/minute.svg"
+        source: "qrc:/analog_clock/internal_/img/minute.svg"
 
 		transform: Rotation{
             origin.x: root.x + root.width / 2
@@ -99,7 +100,7 @@ Rectangle{
 		width: parent.width
 		height: parent.height
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/img/second.svg"
+        source: "qrc:/analog_clock/internal_/img/second.svg"
 
 		transform: Rotation{
             origin.x: root.x + root.width / 2
@@ -119,6 +120,6 @@ Rectangle{
 		width: parent.width
 		height: parent.height
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/img/centor.svg"
+        source: "qrc:/analog_clock/internal_/img/centor.svg"
 	}
 }
