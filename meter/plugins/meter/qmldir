@@ -1,0 +1,2 @@
+module plugins.meter #ドメインは実行ファイルからの相対パスと一致させる
+plugin libmeter #動的リンクファイル名

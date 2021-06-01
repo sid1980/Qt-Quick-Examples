@@ -1,0 +1,5 @@
+<RCC>
+	<qresource prefix="plugins/meter/qml">
+		<file>Meter.qml</file>
+	</qresource>
+</RCC>
