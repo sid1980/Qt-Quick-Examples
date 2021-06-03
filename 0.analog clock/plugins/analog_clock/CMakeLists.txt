@@ -35,3 +35,8 @@ add_custom_command(TARGET analog_clock POST_BUILD COMMAND
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
 	$<TARGET_FILE_DIR:analog_clock>/qmldir
 )
+
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
+	install(TARGETS analog_clock DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/analog_clock)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/analog_clock)
+endif()
