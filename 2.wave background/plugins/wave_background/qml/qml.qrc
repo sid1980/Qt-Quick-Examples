@@ -1,0 +1,5 @@
+<RCC>
+	<qresource prefix="plugins/wave_background/qml">
+		<file>WaveBackground.qml</file>	
+	</qresource>
+</RCC>

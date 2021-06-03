@@ -1,6 +1,5 @@
 <RCC>
 	<qresource prefix="/root/qml">
 		<file>main.qml</file>
-		<file>SinWave.qml</file>
 	</qresource>
 </RCC>

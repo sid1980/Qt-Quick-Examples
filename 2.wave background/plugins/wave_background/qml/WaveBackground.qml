@@ -28,9 +28,6 @@ ShaderEffect {
     varying highp vec2 qt_TexCoord0;
     uniform lowp float qt_Opacity;
 
-    /*--------------------------
-        qmlからのuniform変数
-    *///------------------------
     uniform highp float gain;
     uniform highp float time;
     uniform highp float freq;

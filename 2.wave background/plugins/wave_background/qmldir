@@ -1,0 +1,2 @@
+module plugins.wave_background #ドメインは実行ファイルからの相対パスと一致させる
+plugin libwave_background #動的リンクファイル名

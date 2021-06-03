@@ -4,6 +4,8 @@ project(a.out LANGUAGES CXX)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Qml Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Qml Gui REQUIRED)
 
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/plugins)
+
 set(PROJECT_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/qml/qml.qrc
@@ -27,6 +29,7 @@ add_custom_target(run
 target_link_libraries(a.out PRIVATE 
 	Qt${QT_VERSION_MAJOR}::Qml
 	Qt${QT_VERSION_MAJOR}::Gui
+	wave_background
 )
 
 set_property(TARGET a.out PROPERTY AUTOMOC ON)
