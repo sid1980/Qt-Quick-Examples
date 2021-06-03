@@ -13,6 +13,8 @@ Window{
 	minimumHeight: height * (1/3)
 
     SinWave{
-        anchors.fill: parent
+		anchors.fill: parent
+		color1: "black"
+		color2: "green"
     }
 }
