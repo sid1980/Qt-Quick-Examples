@@ -17,7 +17,7 @@
     along with analog clock.  If not, see <https://www.gnu.org/licenses/>.
 *///-----------------------------------------------------------------------------
 import QtQuick 2.15
-import plugins.analog_clock.internal_ 1.0
+import plugins.analog_clock.internal_ 0.1
 
 Rectangle{
 	id: root

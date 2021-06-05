@@ -25,6 +25,6 @@
 void Plugin::registerTypes(const char* uri)
 {
     auto internal_uri = (QString(uri) + ".internal_").toLocal8Bit();
-    qmlRegisterType<clock_component::ClockBackend>(internal_uri.data(), 1, 0, "ClockBackend_");
-    qmlRegisterType(QUrl("qrc:/qml/AnalogClock.qml"), uri, 1, 0, "AnalogClock");
+    qmlRegisterType<clock_component::ClockBackend>(internal_uri.data(), 0, 1, "ClockBackend_");
+    qmlRegisterType(QUrl("qrc:/qml/AnalogClock.qml"), uri, 0, 1, "AnalogClock");
 }

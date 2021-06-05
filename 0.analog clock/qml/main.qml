@@ -20,7 +20,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.15
 
-import plugins.analog_clock 1.0
+import plugins.analog_clock 0.1
 
 Window{
 	visible: true
