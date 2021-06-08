@@ -15,6 +15,7 @@ add_library(meter SHARED
 	${CMAKE_CURRENT_SOURCE_DIR}/include/plugin.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/qml/qml.qrc
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
+	${CMAKE_CURRENT_SOURCE_DIR}/meter.qmltypes
 )
 
 target_link_libraries(meter PRIVATE 
@@ -40,4 +41,5 @@ add_custom_command(TARGET meter POST_BUILD COMMAND
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
 	install(TARGETS meter DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/meter.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
 endif()

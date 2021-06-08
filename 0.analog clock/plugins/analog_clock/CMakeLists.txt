@@ -14,6 +14,7 @@ add_library(analog_clock SHARED
 	${CMAKE_CURRENT_SOURCE_DIR}/img/img.qrc
 	${CMAKE_CURRENT_SOURCE_DIR}/qml/qml.qrc
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
+	${CMAKE_CURRENT_SOURCE_DIR}/analog_clock.qmltypes
 )
 
 target_link_libraries(analog_clock PRIVATE 
@@ -39,4 +40,5 @@ add_custom_command(TARGET analog_clock POST_BUILD COMMAND
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
 	install(TARGETS analog_clock DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/analog_clock)
 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/analog_clock)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/analog_clock.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/analog_clock)
 endif()

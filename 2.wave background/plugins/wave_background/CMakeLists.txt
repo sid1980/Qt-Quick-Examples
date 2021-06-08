@@ -11,6 +11,7 @@ add_library(wave_background SHARED
 	${CMAKE_CURRENT_SOURCE_DIR}/include/plugin.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/qml/qml.qrc
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
+	${CMAKE_CURRENT_SOURCE_DIR}/wave_background.qmltypes
 )
 
 target_link_libraries(wave_background PRIVATE 
@@ -36,4 +37,5 @@ add_custom_command(TARGET wave_background POST_BUILD COMMAND
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
 	install(TARGETS wave_background DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/wave_background)
 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/wave_background)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/wave_background.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/wave_background)
 endif()

@@ -1,2 +1,3 @@
-module plugins.analog_clock #ドメインは実行ファイルからの相対パスと一致させる
-plugin libanalog_clock #動的リンクファイル名
+module plugins.analog_clock 
+plugin libanalog_clock 
+typeinfo analog_clock.qmltypes

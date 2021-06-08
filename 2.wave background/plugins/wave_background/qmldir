@@ -1,2 +1,3 @@
-module plugins.wave_background #ドメインは実行ファイルからの相対パスと一致させる
-plugin libwave_background #動的リンクファイル名
+module plugins.wave_background 
+plugin libwave_background 
+typeinfo wave_background .qmltypes
