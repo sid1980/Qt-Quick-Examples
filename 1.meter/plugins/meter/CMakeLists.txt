@@ -15,7 +15,6 @@ add_library(meter SHARED
 	${CMAKE_CURRENT_SOURCE_DIR}/include/plugin.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/qml/qml.qrc
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
-	${CMAKE_CURRENT_SOURCE_DIR}/meter.qmltypes
 )
 
 target_link_libraries(meter PRIVATE 
@@ -32,14 +31,26 @@ set_property(TARGET meter PROPERTY AUTOMOC ON)
 set_property(TARGET meter PROPERTY AUTORCC ON)
 set_property(TARGET meter PROPERTY CXX_STANDARD 20)
 
-add_custom_command(TARGET meter POST_BUILD COMMAND
-	${CMAKE_COMMAND} -E copy
+set_target_properties(meter
+	PROPERTIES
+	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/plugins/meter
+	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/plugins/meter
+	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/plugins/meter
+)
+
+add_custom_command(TARGET meter POST_BUILD 
+	COMMAND ${CMAKE_COMMAND} -E copy
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
-	$<TARGET_FILE_DIR:meter>/qmldir
+	$<TARGET_FILE_DIR:meter>/qmldir 
+		
+	COMMAND qmlplugindump 
+	plugins.meter 0.1 
+	${CMAKE_BINARY_DIR} 
+	> $<TARGET_FILE_DIR:meter>/meter.qmltypes
 )
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
 	install(TARGETS meter DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/meter.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
+	install(FILES $<TARGET_FILE_DIR:meter>/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
+	install(FILES $<TARGET_FILE_DIR:meter>/meter.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
 endif()
