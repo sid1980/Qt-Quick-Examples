@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 2.8.12)
-project(analog_clock LANGUAGES CXX)
+
+set(PLUGIN_NAME analog_clock)
+set(URI plugins.${PLUGIN_NAME})
+set(PLUGIN_VERSION 0.1)
+
+string(REPLACE . / OUT_PATH ${URI})
+
+project(${PLUGIN_NAME} LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -14,31 +21,44 @@ add_library(analog_clock SHARED
 	${CMAKE_CURRENT_SOURCE_DIR}/img/img.qrc
 	${CMAKE_CURRENT_SOURCE_DIR}/qml/qml.qrc
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
-	${CMAKE_CURRENT_SOURCE_DIR}/analog_clock.qmltypes
 )
 
-target_link_libraries(analog_clock PRIVATE 
+target_link_libraries(${PLUGIN_NAME} PRIVATE 
 	Qt${QT_VERSION_MAJOR}::Qml
 	Qt${QT_VERSION_MAJOR}::Quick
 	Qt${QT_VERSION_MAJOR}::Core
 )
 
-target_include_directories(analog_clock PRIVATE
+target_include_directories(${PLUGIN_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-set_property(TARGET analog_clock PROPERTY AUTOMOC ON)
-set_property(TARGET analog_clock PROPERTY AUTORCC ON)
-set_property(TARGET analog_clock PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY AUTOMOC ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY AUTORCC ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY COMPILE_FLAGS -Wall) 
 
-add_custom_command(TARGET analog_clock POST_BUILD COMMAND
-	${CMAKE_COMMAND} -E copy
+set_target_properties(${PLUGIN_NAME}
+	PROPERTIES
+	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUT_PATH}
+	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUT_PATH}
+	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUT_PATH}
+)
+
+add_custom_command(TARGET ${PLUGIN_NAME} POST_BUILD 
+	COMMAND ${CMAKE_COMMAND} -E copy
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
-	$<TARGET_FILE_DIR:analog_clock>/qmldir
+	$<TARGET_FILE_DIR:${PLUGIN_NAME}>/qmldir 
+		
+	COMMAND qmlplugindump 
+	${URI} ${PLUGIN_VERSION}
+	${CMAKE_BINARY_DIR} 
+	> $<TARGET_FILE_DIR:${PLUGIN_NAME}>/${PLUGIN_NAME}.qmltypes
 )
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
-	install(TARGETS analog_clock DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/analog_clock)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/analog_clock)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/analog_clock.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/analog_clock)
+	install(TARGETS ${PLUGIN_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/${OUT_PATH})
+	install(FILES $<TARGET_FILE_DIR:${PLUGIN_NAME}>/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/${OUT_PATH})
+	install(FILES $<TARGET_FILE_DIR:${PLUGIN_NAME}>/${PLUGIN_NAME}.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/${OUT_PATH})
 endif()

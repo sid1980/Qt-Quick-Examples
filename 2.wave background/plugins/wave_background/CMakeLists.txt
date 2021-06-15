@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 2.8.12)
-project(wave_background LANGUAGES CXX)
+
+set(PLUGIN_NAME wave_background)
+set(URI plugins.${PLUGIN_NAME})
+set(PLUGIN_VERSION 0.1)
+
+string(REPLACE . / OUT_PATH ${URI})
+
+project(${PLUGIN_NAME} LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -11,31 +18,44 @@ add_library(wave_background SHARED
 	${CMAKE_CURRENT_SOURCE_DIR}/include/plugin.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/qml/qml.qrc
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
-	${CMAKE_CURRENT_SOURCE_DIR}/wave_background.qmltypes
 )
 
-target_link_libraries(wave_background PRIVATE 
+target_link_libraries(${PLUGIN_NAME} PRIVATE 
 	Qt${QT_VERSION_MAJOR}::Qml
 	Qt${QT_VERSION_MAJOR}::Quick
 	Qt${QT_VERSION_MAJOR}::Core
 )
 
-target_include_directories(wave_background PRIVATE
+target_include_directories(${PLUGIN_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-set_property(TARGET wave_background PROPERTY AUTOMOC ON)
-set_property(TARGET wave_background PROPERTY AUTORCC ON)
-set_property(TARGET wave_background PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY AUTOMOC ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY AUTORCC ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY COMPILE_FLAGS -Wall) 
 
-add_custom_command(TARGET wave_background POST_BUILD COMMAND
-	${CMAKE_COMMAND} -E copy
+set_target_properties(${PLUGIN_NAME}
+	PROPERTIES
+	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUT_PATH}
+	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUT_PATH}
+	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUT_PATH}
+)
+
+add_custom_command(TARGET ${PLUGIN_NAME} POST_BUILD 
+	COMMAND ${CMAKE_COMMAND} -E copy
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
-	$<TARGET_FILE_DIR:wave_background>/qmldir
+	$<TARGET_FILE_DIR:${PLUGIN_NAME}>/qmldir 
+		
+	COMMAND qmlplugindump 
+	${URI} ${PLUGIN_VERSION}
+	${CMAKE_BINARY_DIR} 
+	> $<TARGET_FILE_DIR:${PLUGIN_NAME}>/${PLUGIN_NAME}.qmltypes
 )
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
-	install(TARGETS wave_background DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/wave_background)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/wave_background)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/wave_background.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/wave_background)
+	install(TARGETS ${PLUGIN_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/${OUT_PATH})
+	install(FILES $<TARGET_FILE_DIR:${PLUGIN_NAME}>/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/${OUT_PATH})
+	install(FILES $<TARGET_FILE_DIR:${PLUGIN_NAME}>/${PLUGIN_NAME}.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/${OUT_PATH})
 endif()

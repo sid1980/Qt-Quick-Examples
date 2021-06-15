@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 2.8.12)
-project(meter LANGUAGES CXX)
+
+set(PLUGIN_NAME meter)
+set(URI plugins.${PLUGIN_NAME})
+set(PLUGIN_VERSION 0.1)
+
+string(REPLACE . / OUT_PATH ${URI})
+
+project(${PLUGIN_NAME} LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -17,40 +24,42 @@ add_library(meter SHARED
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
 )
 
-target_link_libraries(meter PRIVATE 
+target_link_libraries(${PLUGIN_NAME} PRIVATE 
 	Qt${QT_VERSION_MAJOR}::Qml
 	Qt${QT_VERSION_MAJOR}::Quick
 	Qt${QT_VERSION_MAJOR}::Core
 )
 
-target_include_directories(meter PRIVATE
+target_include_directories(${PLUGIN_NAME} PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-set_property(TARGET meter PROPERTY AUTOMOC ON)
-set_property(TARGET meter PROPERTY AUTORCC ON)
-set_property(TARGET meter PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY AUTOMOC ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY AUTORCC ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY COMPILE_FLAGS -Wall) 
 
-set_target_properties(meter
+set_target_properties(${PLUGIN_NAME}
 	PROPERTIES
-	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/plugins/meter
-	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/plugins/meter
-	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/plugins/meter
+	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUT_PATH}
+	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUT_PATH}
+	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${OUT_PATH}
 )
 
-add_custom_command(TARGET meter POST_BUILD 
+add_custom_command(TARGET ${PLUGIN_NAME} POST_BUILD 
 	COMMAND ${CMAKE_COMMAND} -E copy
 	${CMAKE_CURRENT_SOURCE_DIR}/qmldir
-	$<TARGET_FILE_DIR:meter>/qmldir 
+	$<TARGET_FILE_DIR:${PLUGIN_NAME}>/qmldir 
 		
 	COMMAND qmlplugindump 
-	plugins.meter 0.1 
+	${URI} ${PLUGIN_VERSION}
 	${CMAKE_BINARY_DIR} 
-	> $<TARGET_FILE_DIR:meter>/meter.qmltypes
+	> $<TARGET_FILE_DIR:${PLUGIN_NAME}>/${PLUGIN_NAME}.qmltypes
 )
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
-	install(TARGETS meter DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
-	install(FILES $<TARGET_FILE_DIR:meter>/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
-	install(FILES $<TARGET_FILE_DIR:meter>/meter.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins/meter)
+	install(TARGETS ${PLUGIN_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/${OUT_PATH})
+	install(FILES $<TARGET_FILE_DIR:${PLUGIN_NAME}>/qmldir DESTINATION ${CMAKE_INSTALL_PREFIX}/${OUT_PATH})
+	install(FILES $<TARGET_FILE_DIR:${PLUGIN_NAME}>/${PLUGIN_NAME}.qmltypes DESTINATION ${CMAKE_INSTALL_PREFIX}/${OUT_PATH})
 endif()
